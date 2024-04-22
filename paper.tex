@@ -1,0 +1,99 @@
+%
+% File acl2021.tex
+%
+%% Based on the style files for EMNLP 2020, which were
+%% Based on the style files for ACL 2020, which were
+%% Based on the style files for ACL 2018, NAACL 2018/19, which were
+%% Based on the style files for ACL-2015, with some improvements
+%%  taken from the NAACL-2016 style
+%% Based on the style files for ACL-2014, which were, in turn,
+%% based on ACL-2013, ACL-2012, ACL-2011, ACL-2010, ACL-IJCNLP-2009,
+%% EACL-2009, IJCNLP-2008...
+%% Based on the style files for EACL 2006 by 
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{acl2021}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{spverb}
+\renewcommand{\UrlFont}{\ttfamily\small}
+\usepackage{fancyvrb}
+
+% This is not strictly necessary, and may be commented out,
+% but it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+%\aclfinalcopy % Uncomment this line for the final submission
+%\def\aclpaperid{***} %  Enter the acl Paper ID here
+
+%\setlength\titlebox{5cm}
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+\newcommand\BibTeX{B\textsc{ib}\TeX}
+
+\title{Computer Vision Project Proposal}
+
+\author{Amber Wang \\
+  \texttt{amberyw@mit.edu} \\\And
+  Claire Zhang \\
+  \texttt{clairefz@mit.edu} \\}
+
+\date{April 4, 2024}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+As image generation with AI becomes more advanced, more attention is shifting to video generation with AI. Such technology will have important implications in industries like advertising, marketing, and entertainment. Not only can AI video generation be more cost effective than traditional video production processes, it also has huge potential for scaling to a larger volume of videos. In this project, we aim to investigate video generation and how existing image generation models can be utilized to, first, complete videos, then be extended to generating videos from scratch. 
+
+\section{Related Work}
+
+\subsection{VQ-VAE}
+
+Video generation is currently an ongoing challenge in the field, and there have been many proposals and contributions in the past few years. One example is VideoGPT, which utilizes Vector Quantized Variational Autoencoders (VQ-VAE) to compress high dimensional data and later reconstruct them \cite{yan2021videogpt}. After compressing the data, the representations are passed into a Transformer-like structure to autoregressively predict the next video sequence from previous video sequences. 
+
+\subsection{More Readings}
+
+There are many other models that have been proposed for video generation, such as the Video Transformer \cite{chan2021transgan}, which uses a Transformer architecture to generate videos. The Video Transformer is trained on a large dataset of videos and is able to generate videos that are coherent and realistic. Hugging face includes many other image-to-video models and papers.
+
+\section{Methods}
+
+Existing image-to-video models mostly use stable diffusion to generate the next $k$ frames. Popular implementions such as \verb+stable-diffusion-xl-refiner-1.0+ and \verb+sd-image-variations-diffusers+ are publically available on Hugging Face. Many existing implementations use CLIP and other image-to-vector embedding models to first convert the image to a vector, then perform diffusion.
+
+We explore video generation through finetuning existing image-to-image models. Image to image models are more common and have been more thoroughly researched. We wish to investigate how slight modifications to these models compare to existing image-to-video models. 
+
+\subsection{Dataset}
+
+First, we will be using the TGIF dataset \cite{li2016tgif} with 100K animated GIFs. We will preprocess the data by separating each GIF into its individual frames, which we will then use to learn how to generate new frames autoregressively. Since GIFs have fewer frames, we hope to use this dataset to evaluate our model before potentially training on a larger dataset like UCF101 \cite{soomro2012ucf101}.
+
+\subsection{Model and Algorithm}
+
+We plan on finetuning the first and last layers of \verb+sd-image-variations-diffusers+. We modify the input and output to be a few images stacked, all embedded as vectors. We adjust the number of input and output images to see how the model performs with different amounts of context. We will experiment with other models and finetuning architectures throughout.
+
+\subsection{Computing Resources}
+
+We intend to use Google Colab GPU to train and evaluate our models.
+
+\section{Evaluating Results}
+
+Qualitatively, the frames should form a cohesive idea where each frame appears to follow from the previous frame. For example, in action videos, the movement should follow through all frames. Quantitatively, a good result can minimize the loss function. Possible loss functions include MSE across each individual pixel or GAN Loss.
+
+% [MAYBE some more stuff about qualitative and quantitative expectations?]
+
+\section{Conclusion}
+
+With advanced video generation models, there is huge potential for efficient and scalable video generation in influential industries, like entertainment and marketing. On a more personal level, efficient video generation models can make creative expression more accessible, especially to people who lack the technical skills in video or content creation.
+
+
+\bibliographystyle{acl_natbib}
+\bibliography{sample,acl2021}
+
+\end{document}
