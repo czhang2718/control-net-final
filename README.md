@@ -1,3 +1,6 @@
+# control-net-final
+6.8301 Final Project (Amber Wang, Claire Zhang) on Control Net
+
 # Dataset download instructions
 
 1. Download fill50k zip from https://huggingface.co/lllyasviel/ControlNet/tree/main/training, into directory './trianing/fill50k/source' and './trianing/fill50k/target'
